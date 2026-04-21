@@ -14,7 +14,7 @@ permissions:
   security-events: write
 
 env:
-  GO_VERSION: "1.23"
+  GO_VERSION: "1.24"
   IMAGE_NAME: ghcr.io/avodah-inc/crossplane-provider-incident-io
   CONTROLLER_GEN_VERSION: "v0.16.5"
   KUBECONFORM_VERSION: "v0.6.4"
