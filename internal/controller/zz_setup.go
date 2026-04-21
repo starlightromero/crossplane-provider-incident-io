@@ -7,7 +7,7 @@ package controller
 import (
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	"github.com/crossplane/upjet/pkg/controller"
+	"github.com/crossplane/upjet/v2/pkg/controller"
 
 	attribute "github.com/avodah-inc/crossplane-provider-incident-io/internal/controller/alerting/attribute"
 	route "github.com/avodah-inc/crossplane-provider-incident-io/internal/controller/alerting/route"

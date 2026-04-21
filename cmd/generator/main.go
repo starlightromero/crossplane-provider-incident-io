@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 
 	"github.com/avodah-inc/crossplane-provider-incident-io/config"
-	"github.com/crossplane/upjet/pkg/pipeline"
+	"github.com/crossplane/upjet/v2/pkg/pipeline"
 )
 
 func main() {
@@ -39,5 +39,5 @@ func main() {
 	// - Go types under apis/ (one package per domain group and version)
 	// - CRD YAML under package/crds/
 	// - Controllers under internal/controller/
-	pipeline.Run(pc, rootDir)
+	pipeline.Run(pc, pc, rootDir)
 }
