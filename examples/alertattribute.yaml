@@ -1,0 +1,11 @@
+apiVersion: alerting.incidentio.crossplane.io/v1alpha1
+kind: Attribute
+metadata:
+  name: service-tier
+spec:
+  forProvider:
+    name: "service_tier"
+    type: "single_select"
+    array: false
+  providerConfigRef:
+    name: default

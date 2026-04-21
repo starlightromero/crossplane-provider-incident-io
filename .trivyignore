@@ -1,0 +1,5 @@
+# Trivy false positive suppressions
+# Add CVE IDs here to suppress known false positives.
+# Format: one CVE per line, with an optional comment.
+# Example:
+# CVE-2023-12345  # False positive: not reachable in our code path

@@ -1,0 +1,20 @@
+apiVersion: oncall.incidentio.crossplane.io/v1alpha1
+kind: Path
+metadata:
+  name: engineering-escalation
+spec:
+  forProvider:
+    name: "Engineering Escalation"
+    path:
+      - id: "first-responder"
+        type: "level"
+        level:
+          - targets:
+              - id: "SCHEDULE_ID"
+                type: "schedule"
+                urgency: "high"
+            timeToAckIntervalCondition: "active"
+            timeToAckSeconds: 300
+            timeToAckWeekdayIntervalConfigId: ""
+  providerConfigRef:
+    name: default

@@ -1,0 +1,25 @@
+# Build artifacts
+bin/
+_output/
+coverage.out
+
+# Version control
+.git/
+.gitignore
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Kiro specs
+.kiro/
+
+# Documentation (not needed in image)
+*.md
+LICENSE
+docs/
+
+# Examples
+examples/

@@ -1,0 +1,14 @@
+apiVersion: catalog.incidentio.crossplane.io/v1alpha1
+kind: CatalogType
+metadata:
+  name: service
+spec:
+  forProvider:
+    name: "Service"
+    description: "A service in the product catalog"
+    sourceRepoUrl: "https://github.com/avodah-inc/crossplane-provider-incident-io"
+    typeName: 'Custom["Service"]'
+    categories:
+      - "service"
+  providerConfigRef:
+    name: default

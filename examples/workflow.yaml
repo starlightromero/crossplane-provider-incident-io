@@ -1,0 +1,22 @@
+apiVersion: automation.incidentio.crossplane.io/v1alpha1
+kind: Workflow
+metadata:
+  name: notify-on-critical
+spec:
+  forProvider:
+    name: "Notify on Critical Incident"
+    trigger: "incident.updated"
+    state: "active"
+    runsOnIncidents: "newly_created"
+    runsOnIncidentModes:
+      - "standard"
+    continueOnStepError: false
+    steps:
+      - forEach: ""
+        id: "notify-slack"
+        name: "Notify Slack channel"
+        paramBindings:
+          - value:
+              - literal: "#incidents"
+  providerConfigRef:
+    name: default

@@ -1,0 +1,149 @@
+name: Release
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: write
+  packages: write
+  issues: write
+  pull-requests: write
+
+env:
+  GO_VERSION: "1.23"
+  IMAGE_NAME: ghcr.io/avodah-inc/crossplane-provider-incident-io
+  NAME: crossplane-provider-incident-io
+  CONTROLLER_GEN_VERSION: "v0.16.5"
+
+jobs:
+  semantic-release:
+    name: Semantic Release
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    outputs:
+      new-release: ${{ steps.release.outputs.new_release_published }}
+      version: ${{ steps.release.outputs.new_release_version }}
+      tag: ${{ steps.release.outputs.new_release_git_tag }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Semantic Release
+        id: release
+        uses: cycjimmy/semantic-release-action@b12c8f6015dc215fe37bc154d4ad456dd3833c90 # v6.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-push:
+    name: Build and Push Image
+    needs: semantic-release
+    runs-on: ubuntu-latest
+    if: needs.semantic-release.outputs.new-release == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4.0.0
+
+      - name: Log in to GHCR
+        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6.0.0
+        with:
+          images: ${{ env.IMAGE_NAME }}
+          tags: |
+            type=semver,pattern={{version}},value=v${{ needs.semantic-release.outputs.version }}
+            type=semver,pattern={{major}}.{{minor}},value=v${{ needs.semantic-release.outputs.version }}
+            type=sha
+
+      - name: Build and push multi-arch image
+        uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7.1.0
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            VERSION=${{ needs.semantic-release.outputs.version }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  package:
+    name: Build and Push Crossplane Package
+    needs: [semantic-release, build-push]
+    runs-on: ubuntu-latest
+    if: needs.semantic-release.outputs.new-release == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Set up Go
+        uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache: true
+
+      - name: Install controller-gen
+        run: go install sigs.k8s.io/controller-tools/cmd/controller-gen@${{ env.CONTROLLER_GEN_VERSION }}
+
+      - name: Install Crossplane CLI
+        run: |
+          curl -sL "https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh" | sh
+          sudo mv crank /usr/local/bin/
+
+      - name: Log in to GHCR
+        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate CRDs
+        run: make generate
+
+      - name: Pull runtime image
+        run: docker pull ${{ env.IMAGE_NAME }}:${{ needs.semantic-release.outputs.version }}
+
+      - name: Build Crossplane package
+        run: |
+          cd package
+          crossplane xpkg build \
+            --package-root=. \
+            --embed-runtime-image=${{ env.IMAGE_NAME }}:${{ needs.semantic-release.outputs.version }} \
+            -o ../provider-${{ env.NAME }}-v${{ needs.semantic-release.outputs.version }}.xpkg
+
+      - name: Push Crossplane package
+        run: |
+          crossplane xpkg push \
+            --package provider-${{ env.NAME }}-v${{ needs.semantic-release.outputs.version }}.xpkg \
+            ${{ env.IMAGE_NAME }}:${{ needs.semantic-release.outputs.version }}
+
+      - name: Generate SBOM
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # v0.35.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          format: cyclonedx
+          output: sbom.cdx.json
+
+      - name: Attach artifacts to GitHub Release
+        uses: softprops/action-gh-release@b4309332981a82ec1c5618f44dd2e27cc8bfbfda # v3.0.0
+        with:
+          tag_name: ${{ needs.semantic-release.outputs.tag }}
+          files: |
+            provider-${{ env.NAME }}-v${{ needs.semantic-release.outputs.version }}.xpkg
+            sbom.cdx.json

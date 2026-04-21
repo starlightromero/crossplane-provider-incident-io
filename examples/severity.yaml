@@ -1,0 +1,11 @@
+apiVersion: incident.incidentio.crossplane.io/v1alpha1
+kind: Severity
+metadata:
+  name: critical
+spec:
+  forProvider:
+    name: "Critical"
+    description: "Critical severity - major customer impact requiring immediate response"
+    rank: 1
+  providerConfigRef:
+    name: default

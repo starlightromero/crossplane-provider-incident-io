@@ -1,0 +1,13 @@
+apiVersion: meta.pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-incident-io
+  annotations:
+    meta.crossplane.io/maintainer: Avodah Inc <engineering@avodah.io>
+    meta.crossplane.io/source: https://github.com/avodah-inc/crossplane-provider-incident-io
+    meta.crossplane.io/description: Crossplane provider for Incident.io generated with Upjet
+spec:
+  controller:
+    image: ghcr.io/avodah-inc/crossplane-provider-incident-io:latest
+  crossplane:
+    version: ">=v1.14.0"

@@ -1,0 +1,11 @@
+apiVersion: incidentio.crossplane.io/v1alpha1
+kind: ProviderConfig
+metadata:
+  name: default
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      namespace: crossplane-system
+      name: incident-io-credentials
+      key: api-key
