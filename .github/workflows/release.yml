@@ -132,7 +132,7 @@ jobs:
       - name: Push Crossplane package
         run: |
           crossplane xpkg push \
-            --package provider-${{ env.NAME }}-v${{ needs.semantic-release.outputs.version }}.xpkg \
+            -f provider-${{ env.NAME }}-v${{ needs.semantic-release.outputs.version }}.xpkg \
             ${{ env.IMAGE_NAME }}:${{ needs.semantic-release.outputs.version }}
 
       - name: Generate SBOM

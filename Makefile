@@ -79,7 +79,7 @@ xpkg-build: ## Build Crossplane provider package
 
 xpkg-push: ## Push xpkg to ghcr.io
 	$(CRANK) xpkg push \
-		--package $(XPKG_FILE) \
+		-f $(XPKG_FILE) \
 		$(REGISTRY):$(VERSION)
 
 ##@ Quality
