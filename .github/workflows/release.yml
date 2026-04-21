@@ -149,5 +149,10 @@ jobs:
         run: |
           gh release upload ${{ needs.semantic-release.outputs.tag }} \
             provider-${{ env.NAME }}-v${{ needs.semantic-release.outputs.version }}.xpkg \
-            sbom.cdx.json \
-            --clobber
+            sbom.cdx.json
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release edit ${{ needs.semantic-release.outputs.tag }} --draft=false
