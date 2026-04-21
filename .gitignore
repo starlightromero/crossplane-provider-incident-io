@@ -1,7 +1,7 @@
 # Build artifacts
 bin/
-provider
-generator
+/provider
+/generator
 _output/
 
 # Test and coverage
