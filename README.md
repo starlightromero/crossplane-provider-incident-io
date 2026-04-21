@@ -47,7 +47,7 @@ kind: Provider
 metadata:
   name: provider-incident-io
 spec:
-  package: ghcr.io/avodah-inc/crossplane-provider-incident-io:v0.1.0
+  package: ghcr.io/starlightromero/crossplane-provider-incident-io:v0.1.0
 ```
 
 ### 2. Create a Secret with Your API Key

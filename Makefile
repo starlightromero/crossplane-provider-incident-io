@@ -4,7 +4,7 @@ MODULE := github.com/avodah-inc/$(PROJECT_NAME)
 VERSION ?= 0.1.0
 
 # Registry
-REGISTRY := ghcr.io/avodah-inc/$(PROJECT_NAME)
+REGISTRY := ghcr.io/starlightromero/$(PROJECT_NAME)
 IMAGE_TAG := $(REGISTRY):$(VERSION)
 
 # Build
