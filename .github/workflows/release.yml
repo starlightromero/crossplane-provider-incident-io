@@ -144,9 +144,10 @@ jobs:
           output: sbom.cdx.json
 
       - name: Attach artifacts to GitHub Release
-        uses: softprops/action-gh-release@b4309332981a82ec1c5618f44dd2e27cc8bfbfda # v3.0.0
-        with:
-          tag_name: ${{ needs.semantic-release.outputs.tag }}
-          files: |
-            provider-${{ env.NAME }}-v${{ needs.semantic-release.outputs.version }}.xpkg
-            sbom.cdx.json
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload ${{ needs.semantic-release.outputs.tag }} \
+            provider-${{ env.NAME }}-v${{ needs.semantic-release.outputs.version }}.xpkg \
+            sbom.cdx.json \
+            --clobber
