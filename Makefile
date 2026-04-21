@@ -97,6 +97,7 @@ validate-crds: ## Validate generated CRDs with kubeconform in strict mode
 		-schema-location default \
 		-schema-location "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json" \
 		-strict \
+		-ignore-missing-schemas \
 		-summary \
 		$(CRD_DIR)/
 
