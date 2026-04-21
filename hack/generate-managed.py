@@ -19,13 +19,13 @@ package v1alpha1
 
 MANAGED_IMPORTS = """
 import (
-\txpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
-\txpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
+\txpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+\txpresource "github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 )
 """
 
 MANAGEDLIST_IMPORTS = """
-import resource "github.com/crossplane/crossplane-runtime/pkg/resource"
+import resource "github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 """
 
 def managed_methods(type_name):
@@ -48,11 +48,6 @@ func (mg *{type_name}) GetManagementPolicies() xpv1.ManagementPolicies {{
 // GetProviderConfigReference of this {type_name}.
 func (mg *{type_name}) GetProviderConfigReference() *xpv1.Reference {{
 \treturn mg.Spec.ProviderConfigReference
-}}
-
-// GetPublishConnectionDetailsTo of this {type_name}.
-func (mg *{type_name}) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {{
-\treturn mg.Spec.PublishConnectionDetailsTo
 }}
 
 // GetWriteConnectionSecretToReference of this {type_name}.
@@ -78,11 +73,6 @@ func (mg *{type_name}) SetManagementPolicies(r xpv1.ManagementPolicies) {{
 // SetProviderConfigReference of this {type_name}.
 func (mg *{type_name}) SetProviderConfigReference(r *xpv1.Reference) {{
 \tmg.Spec.ProviderConfigReference = r
-}}
-
-// SetPublishConnectionDetailsTo of this {type_name}.
-func (mg *{type_name}) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {{
-\tmg.Spec.PublishConnectionDetailsTo = r
 }}
 
 // SetWriteConnectionSecretToReference of this {type_name}.

@@ -7,8 +7,8 @@
 package v1alpha1
 
 import (
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
-	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
+	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	xpresource "github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 )
 
 // GetCondition of this CatalogType.
@@ -29,11 +29,6 @@ func (mg *CatalogType) GetManagementPolicies() xpv1.ManagementPolicies {
 // GetProviderConfigReference of this CatalogType.
 func (mg *CatalogType) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this CatalogType.
-func (mg *CatalogType) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this CatalogType.
@@ -59,11 +54,6 @@ func (mg *CatalogType) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this CatalogType.
 func (mg *CatalogType) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this CatalogType.
-func (mg *CatalogType) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this CatalogType.
@@ -104,11 +94,6 @@ func (mg *CatalogEntries) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this CatalogEntries.
-func (mg *CatalogEntries) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
 // GetWriteConnectionSecretToReference of this CatalogEntries.
 func (mg *CatalogEntries) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
@@ -132,11 +117,6 @@ func (mg *CatalogEntries) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this CatalogEntries.
 func (mg *CatalogEntries) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this CatalogEntries.
-func (mg *CatalogEntries) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this CatalogEntries.
@@ -177,11 +157,6 @@ func (mg *Entry) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this Entry.
-func (mg *Entry) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
 // GetWriteConnectionSecretToReference of this Entry.
 func (mg *Entry) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
@@ -205,11 +180,6 @@ func (mg *Entry) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this Entry.
 func (mg *Entry) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this Entry.
-func (mg *Entry) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this Entry.
@@ -250,11 +220,6 @@ func (mg *TypeAttribute) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this TypeAttribute.
-func (mg *TypeAttribute) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
 // GetWriteConnectionSecretToReference of this TypeAttribute.
 func (mg *TypeAttribute) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
@@ -278,11 +243,6 @@ func (mg *TypeAttribute) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this TypeAttribute.
 func (mg *TypeAttribute) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this TypeAttribute.
-func (mg *TypeAttribute) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this TypeAttribute.

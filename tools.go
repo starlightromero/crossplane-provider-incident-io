@@ -7,8 +7,8 @@ package tools
 // by the provider code. It ensures go mod tidy keeps these dependencies.
 
 import (
-	_ "github.com/crossplane/crossplane-runtime/apis/common/v1"
+	_ "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 	_ "github.com/crossplane/crossplane-tools/cmd/angryjet"
-	_ "github.com/crossplane/upjet/pkg/pipeline"
+	_ "github.com/crossplane/upjet/v2/pkg/pipeline"
 	_ "sigs.k8s.io/controller-runtime/pkg/manager"
 )

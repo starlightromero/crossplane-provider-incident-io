@@ -1,6 +1,6 @@
 package config
 
-import ujconfig "github.com/crossplane/upjet/pkg/config"
+import ujconfig "github.com/crossplane/upjet/v2/pkg/config"
 
 // ExternalNameConfigs contains all external name configurations for this
 // provider. All Incident.io resources use server-assigned UUIDs, so

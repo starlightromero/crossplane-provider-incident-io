@@ -4,8 +4,8 @@ import (
 	"context"
 	"strings"
 
-	"github.com/crossplane/crossplane-runtime/pkg/resource"
-	"github.com/crossplane/upjet/pkg/terraform"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
+	"github.com/crossplane/upjet/v2/pkg/terraform"
 	"github.com/pkg/errors"
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -21,11 +21,12 @@ const (
 	keyAPIKey   = "api_key"
 	keyEndpoint = "endpoint"
 
-	errNoProviderConfig    = "cannot get referenced ProviderConfig"
-	errGetCredentials      = "cannot get credentials"
-	errExtractCredentials  = "cannot extract credentials from secret"
-	errCredentialsEmpty    = "extracted credentials are empty"
-	errTrackProviderConfig = "cannot track ProviderConfig usage"
+	errNoProviderConfig     = "cannot get referenced ProviderConfig"
+	errGetCredentials       = "cannot get credentials"
+	errExtractCredentials   = "cannot extract credentials from secret"
+	errCredentialsEmpty     = "extracted credentials are empty"
+	errTrackProviderConfig  = "cannot track ProviderConfig usage"
+	errNotProviderConfigRef = "managed resource does not implement GetProviderConfigReference"
 )
 
 // TerraformSetupBuilder returns a terraform.SetupFn that reads credentials from
@@ -41,7 +42,11 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 			},
 		}
 
-		configRef := mg.GetProviderConfigReference()
+		pcr, ok := mg.(resource.ProviderConfigReferencer)
+		if !ok {
+			return setup, errors.New(errNotProviderConfigRef)
+		}
+		configRef := pcr.GetProviderConfigReference()
 		if configRef == nil {
 			return setup, errors.New(errNoProviderConfig)
 		}

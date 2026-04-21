@@ -7,8 +7,8 @@
 package v1alpha1
 
 import (
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
-	resource "github.com/crossplane/crossplane-runtime/pkg/resource"
+	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	resource "github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 )
 
 // GetProviderConfigReference of this ProviderConfigUsage.
