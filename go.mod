@@ -3,7 +3,7 @@ module github.com/avodah-inc/crossplane-provider-incident-io
 go 1.26
 
 require (
-	dario.cat/mergo v1.0.1
+	dario.cat/mergo v1.0.2
 	github.com/alecthomas/kingpin/v2 v2.4.0
 	github.com/crossplane/crossplane-runtime v1.20.0
 	github.com/crossplane/crossplane-tools v0.0.0-20251017183449-dd4517244339
