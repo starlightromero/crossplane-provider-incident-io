@@ -35,6 +35,9 @@ all: generate build
 
 generate: ## Run Upjet code generation via cmd/generator/main.go
 	$(GO) run $(MODULE)/cmd/generator
+	@echo "Cleaning up stale v1beta1 references..."
+	@sed -i.bak '/v1beta1/d' apis/zz_register.go && rm -f apis/zz_register.go.bak
+	@find apis -name 'zz_generated.conversion_hubs.go' -exec rm -f {} +
 	@echo "Generating managed resource method sets..."
 	python3 hack/generate-managed.py
 	@echo "Generating deepcopy methods..."
