@@ -15,7 +15,7 @@ PLATFORMS := linux/amd64,linux/arm64
 # Tools
 GOLANGCI_LINT_VERSION ?= v1.57.2
 KUBECONFORM_VERSION ?= v0.6.4
-CRANK ?= crank
+CRANK ?= crossplane
 
 # Directories
 CRD_DIR := package/crds
