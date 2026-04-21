@@ -36,6 +36,9 @@ jobs:
       - name: Install controller-gen
         run: go install sigs.k8s.io/controller-tools/cmd/controller-gen@${{ env.CONTROLLER_GEN_VERSION }}
 
+      - name: Install goimports
+        run: go install golang.org/x/tools/cmd/goimports@latest
+
       - name: Generate
         run: make generate
 
@@ -68,6 +71,9 @@ jobs:
 
       - name: Install controller-gen
         run: go install sigs.k8s.io/controller-tools/cmd/controller-gen@${{ env.CONTROLLER_GEN_VERSION }}
+
+      - name: Install goimports
+        run: go install golang.org/x/tools/cmd/goimports@latest
 
       - name: Install kubeconform
         run: go install github.com/yannh/kubeconform/cmd/kubeconform@${{ env.KUBECONFORM_VERSION }}
