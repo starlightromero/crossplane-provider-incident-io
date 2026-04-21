@@ -35,8 +35,11 @@ all: generate build
 
 generate: ## Run Upjet code generation via cmd/generator/main.go
 	$(GO) run $(MODULE)/cmd/generator
-	@echo "Cleaning up stale v1beta1 references..."
-	@sed -i.bak '/v1beta1/d' apis/zz_register.go && rm -f apis/zz_register.go.bak
+	@echo "Cleaning up stale v1beta1 and scope-specific references..."
+	@for f in $$(find apis -name 'zz_register.go'); do \
+		sed -i.bak '/v1beta1/d' "$$f" && rm -f "$$f.bak"; \
+	done
+	@rm -rf apis/cluster apis/namespaced
 	@find apis -name 'zz_generated.conversion_hubs.go' -exec rm -f {} +
 	@echo "Generating managed resource method sets..."
 	python3 hack/generate-managed.py
