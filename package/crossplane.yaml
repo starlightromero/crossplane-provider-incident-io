@@ -8,6 +8,6 @@ metadata:
     meta.crossplane.io/description: Crossplane provider for Incident.io generated with Upjet
 spec:
   controller:
-    image: ghcr.io/starlightromero/crossplane-provider-incident-io:latest
+    image: ghcr.io/starlightromero/crossplane-provider-incident-io:VERSION_PLACEHOLDER
   crossplane:
     version: ">=v1.14.0"
