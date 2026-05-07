@@ -21,6 +21,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
 	"github.com/avodah-inc/crossplane-provider-incident-io/apis"
+	"github.com/avodah-inc/crossplane-provider-incident-io/config"
 	"github.com/avodah-inc/crossplane-provider-incident-io/internal/clients"
 	intcontroller "github.com/avodah-inc/crossplane-provider-incident-io/internal/controller"
 )
@@ -93,6 +94,7 @@ func main() {
 	tracker := tjcontroller.NewOperationStore(log)
 
 	o := tjcontroller.Options{
+		Provider: config.GetProvider(),
 		Options: controller.Options{
 			Logger:                  log,
 			MaxConcurrentReconciles: *maxReconcileRate,
