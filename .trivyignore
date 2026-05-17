@@ -3,3 +3,7 @@
 # Format: one CVE per line, with an optional comment.
 # Example:
 # CVE-2023-12345  # False positive: not reachable in our code path
+
+# OpenTofu bundled Go stdlib CVEs (upstream fix required)
+CVE-2026-39836  # Windows-only: Panic in Dial/LookupPort with NUL byte; not applicable to Linux containers
+CVE-2026-42499  # DoS in consumePhrase parsing; awaiting upstream OpenTofu rebuild with patched Go
