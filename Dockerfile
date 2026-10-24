@@ -31,7 +31,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends unzip && \
     rm -rf /tmp/tofu /tmp/tofu.zip
 
 # Runtime stage
-FROM gcr.io/distroless/static:nonroot@sha256:e3f945647ffb95b5839c07038d64f9811adf17308b9121d8a2b87b6a22a80a39
+FROM gcr.io/distroless/static:nonroot@sha256:18f4cc26c9ffa7f20a359298be7deadac5c607c8e03a02b8119f1a5fc2f82c99
 
 COPY --from=builder /workspace/provider /usr/local/bin/provider
 COPY --from=builder /workspace/tofu /usr/local/bin/terraform
